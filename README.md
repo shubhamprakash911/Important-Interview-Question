@@ -34,7 +34,7 @@ button.addEventListener("click", () => {
 
 Remember that the value of `this` can sometimes be a source of confusion and bugs in JavaScript, so it's important to understand how it behaves in different scenarios.
 
-# What are nested object in JavaScript and how can we access their properties explain with an example?
+## What are nested object in JavaScript and how can we access their properties explain with an example?
 
 In JavaScript, a nested object refers to an object that is a property of another object. This means that you have an object within another object. This is a common way to organize and structure data in a hierarchical manner.
 
@@ -89,3 +89,96 @@ if (person && person.address) {
 ```
 
 This prevents errors when accessing properties within nested objects that might not exist in certain cases.
+
+## Write code that uses middleware to implement a rate limiting in an API in nodejs?
+
+Certainly! Here's an example of how you can implement rate limiting using middleware in a Node.js API using the popular `express` framework and the `express-rate-limit` middleware:
+
+1. First, you need to set up your Node.js project and install the necessary packages:
+
+```bash
+npm init -y
+npm install express express-rate-limit
+```
+
+2. Create an `index.js` file with the following code:
+
+```javascript
+const express = require("express");
+const rateLimit = require("express-rate-limit");
+
+const app = express();
+
+// Create a rate limiter middleware
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per windowMs
+  message: "Too many requests from this IP, please try again later.",
+});
+
+// Apply the rate limiter to all requests
+app.use(limiter);
+
+// Your API routes
+app.get("/api/resource", (req, res) => {
+  res.send("This is your API resource.");
+});
+
+app.listen(3000, () => {
+  console.log("Server is running on port 3000");
+});
+```
+
+In this example:
+
+- We import the `express` and `express-rate-limit` packages.
+- We create an Express app instance.
+- We create a rate limiter middleware using `express-rate-limit`, specifying the maximum number of requests allowed within a certain time window.
+- We use the `app.use` method to apply the rate limiter middleware to all routes. This means that every incoming request will go through the rate limiting checks.
+- We define a sample API route (`/api/resource`) just to demonstrate that the rate limiting middleware is applied.
+
+Adjust the `windowMs` and `max` values in the `limiter` configuration to set your desired rate limiting behavior.
+
+Remember that this is just a basic example. In a real-world scenario, you might want to store user data and rate limits in a database for more control and persistence. Additionally, you can customize the error responses and handling to better suit your application's needs.
+
+## What are some common mistakes to avoid when using query and route parameters in node JS applications?
+
+When working with query and route parameters in Node.js applications, there are several common mistakes that developers should be aware of and avoid:
+
+1. **Lack of Validation:**
+   Always validate user input from query and route parameters to prevent security vulnerabilities like SQL injection and cross-site scripting (XSS) attacks. Failing to validate input can lead to malicious code execution or unauthorized data access.
+
+2. **Not Sanitizing Input:**
+   Sanitize user input to remove potentially dangerous characters or scripts. Use libraries like `validator` or `DOMPurify` to ensure that the data you receive is safe to use.
+
+3. **Missing Defaults:**
+   Provide default values for query parameters if they are optional. This prevents unexpected behavior in your application when parameters are omitted.
+
+4. **Insecure Data Storage:**
+   Avoid storing sensitive information such as passwords, tokens, or private data in query or route parameters. Use secure storage mechanisms like environment variables or databases.
+
+5. **No Error Handling:**
+   Implement proper error handling for invalid or missing parameters. Respond with meaningful error messages and appropriate HTTP status codes to guide users and developers in troubleshooting.
+
+6. **Overloading Route Parameters:**
+   Be cautious when defining routes that have parameters with overlapping patterns. This can lead to unexpected routing behavior and difficulty in debugging.
+
+7. **Unnecessary URL Encoding/Decoding:**
+   Query parameters are automatically URL-encoded and decoded by Node.js. Manually encoding or decoding them can lead to incorrect results.
+
+8. **Incorrect Use of Route Parameters:**
+   Route parameters (`/users/:id`) are meant for identifying resources. Avoid using route parameters to pass non-identifying data or data that changes frequently.
+
+9. **Ignoring Type Conversion:**
+   Remember that query parameters are often received as strings. If you expect a certain data type, make sure to convert the parameter values accordingly (e.g., using `parseInt` for numbers).
+
+10. **Not Using Named Route Parameters:**
+    When using route parameters, prefer named parameters over positional ones. Named parameters make the code more readable and maintainable.
+
+11. **Unpredictable URL Structure:**
+    Keep your URL structure consistent and predictable. Frequent changes in your URL structure can confuse users and negatively impact SEO.
+
+12. **Exposing Sensitive Information:**
+    Be cautious about exposing internal information in URLs, especially if the URL structure exposes database IDs, directory structures, or other sensitive details.
+
+By understanding these common mistakes and following best practices, you can ensure that your Node.js applications handle query and route parameters securely and effectively.
