@@ -325,4 +325,4 @@ In summary, the key differences between `package.json` and `package-lock.json` a
 - **Version Locking**: `package.json` may specify dependency version ranges, while `package-lock.json` specifies the exact versions of dependencies to ensure consistency across installations.
 - **Manual vs. Automatic**: `package.json` is manually created and edited by developers, whereas `package-lock.json` is automatically generated and updated by npm.
 
-Together, these files work in conjunction to ensure that a Node.js project's dependencies are both specified and locked down to specific versions, providing reliability and reproducibility in development and deployment environments...
+Together, these files work in conjunction to ensure that a Node.js project's dependencies are both specified and locked down to specific versions, providing reliability and reproducibility in development and deployment environments.
